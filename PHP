@@ -1,0 +1,38 @@
+<?php
+
+$apiKey = 'YOUR_API_KEY';
+$receptor = '00974211234565';  // شماره گیرنده
+$token = 'yourToken';
+$token2 = 'yourToken2';
+$token3 = 'yourToken3';
+$template = 'yourTemplateName';
+
+$url = "https://api.kavenegar.com/v1/{$apiKey}/verify/lookup.json";
+
+$data = [
+    'receptor' => $receptor,
+    'token' => $token,
+    'token2' => $token2,
+    'token3' => $token3,
+    'template' => $template,
+];
+
+$options = [
+    'http' => [
+        'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
+        'method' => 'POST',
+        'content' => http_build_query($data),
+    ],
+];
+
+$context = stream_context_create($options);
+$response = file_get_contents($url, false, $context);
+
+if ($response === FALSE) {
+    // Handle error
+}
+
+$responseData = json_decode($response, true);
+print_r($responseData);
+
+?>
